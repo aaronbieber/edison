@@ -56,11 +56,11 @@ to some other service, like your ELK (Elasticsearch, Logstash, Kibana) stack,
 Redis, etc. To do this, Edison allows you to provide your own experimental
 journal implementation.
 
-Simply create an object that implements `Edison\Journal` and pass it into the
-`Edison\Experiment` constructor. Edison ships with a toy journal implementation
-called `Echo_Journal` that simply spits out a JSON representation of experiment
-results using `echo`, which can be helpful for debugging or as a model for your
-own journal.
+Simply create an object that implements `Edison\Interfaces\Journal` and pass it
+into the `Edison\Experiment` constructor. Edison ships with a toy journal
+implementation called `Echo_Journal` that simply spits out a JSON representation
+of experiment results using `echo`, which can be helpful for debugging or as a
+model for your own journal.
 
 ```php
 <?php
@@ -82,7 +82,7 @@ $result = $experiment->run();
 Depending on what you're trying to refactor, the results of the original and
 refactored code paths may not be comparable using `==`. In that case, you can
 also provide Edison with your own comparator that implements
-`Interfaces\Comparator`.
+`Edison\Interfaces\Comparator`.
 
 This allows you to explicitly define the success criteria for your
 experiments. Perhaps both code paths produce an object containing the same data,
