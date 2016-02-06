@@ -63,7 +63,10 @@ Redis, etc. To do this, Edison allows you to provide your own experimental
 journal implementation.
 
 Simply create an object that implements `Edison\Interfaces\Journal` and pass it
-into the `Edison\Experiment` constructor.
+into the `Edison\Experiment` constructor. The journal's `save()` method will be
+called with the results of the experiment stored in an instance of
+`Edison\Observation`. Handle the results however you want, perhaps sending
+timing data to Graphite and the return values to Logstash or Redis.
 
 ## Sophisticated Comparison ##
 
