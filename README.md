@@ -26,7 +26,6 @@ paths to evaluate and you're off to the races.
 <?php
 $experiment = new Edison\Experiment('test-some-refactor');
 $experiment = $experiment
-    ->variant_percent(50)
     ->use_control(function () { /* Control code */ })
     ->use_variant(function () { /* Variant (test) code */ });
 
@@ -38,6 +37,10 @@ comparing the results of the two functions using `==`. The results of the
 experiment will be written to a log file in the `/tmp` directory using a
 filename derived from the experiment name. The result from the control is always
 returned.
+
+The results will include the full return values of the control and the variant,
+the execution time in milliseconds, and whether the results were found to be
+equivalent by Edison. By default, the results are written as a JSON string.
 
 If your refactored code is potentially slower, or you don't have a great deal of
 confidence in it (which is why you're running an experiment, right?) you can
