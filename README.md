@@ -41,7 +41,7 @@ returned.
 
 If your refactored code is potentially slower, or you don't have a great deal of
 confidence in it (which is why you're running an experiment, right?) you can
-tell Edison to run it much less often. Call `variant_percentage()` on the
+tell Edison to run it much less often. Call `variant_percent()` on the
 experiment and give it an integer percentage for how often the variant should be
 tested.
 
