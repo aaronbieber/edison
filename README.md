@@ -62,6 +62,21 @@ called `Echo_Journal` that simply spits out a JSON representation of experiment
 results using `echo`, which can be helpful for debugging or as a model for your
 own journal.
 
+```php
+<?php
+$experiment = new Edison\Experiment(
+    'test-some-refactor',
+    new Edison\Echo_Journal('test-some-refactor')
+);
+
+$experiment = $experiment
+    ->variant_percent(50)
+    ->use_control(function () { /* Control code */ })
+    ->use_variant(function () { /* Variant (test) code */ });
+
+$result = $experiment->run();
+```
+
 ## Sophisticated Comparison ##
 
 Depending on what you're trying to refactor, the results of the original and
@@ -74,3 +89,25 @@ experiments. Perhaps both code paths produce an object containing the same data,
 but the new object has a different structure. You could create your own
 `Comparator` class that compares the values within the objects and returns true
 only if all of them are the same.
+
+```php
+<?php
+$experiment = new Edison\Experiment(
+    'test-some-refactor',
+    new Edison\Echo_Journal('test-some-refactor'),
+    new Custom_Comparator()
+);
+
+$experiment = $experiment
+    ->variant_percent(50)
+    ->use_control(function () { /* Control code */ })
+    ->use_variant(function () { /* Variant (test) code */ });
+
+$result = $experiment->run();
+```
+
+## Work in Progress ##
+
+This project is essentially a beta; I expect to refine it over time. If you
+actually use it and run into problems, open issues or, better yet, send me pull
+requests!
