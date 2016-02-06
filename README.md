@@ -25,7 +25,8 @@ paths to evaluate and you're off to the races.
 ```php
 <?php
 $experiment = new Edison\Experiment('test-some-refactor');
-$experiment = $experiment->variant_percent(50)
+$experiment = $experiment
+    ->variant_percent(50)
     ->use_control(function () { /* Control code */ })
     ->use_variant(function () { /* Variant (test) code */ });
 
