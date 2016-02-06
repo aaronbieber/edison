@@ -10,11 +10,6 @@
 namespace Edison\Interfaces;
 
 interface Journal {
+  public function save(\Edison\Observation $observation);
   public function __construct($experiment_name);
-  public function set_control_duration($duration);
-  public function set_variant_duration($duration);
-  public function set_control_result($result);
-  public function set_variant_result($result);
-  public function set_discrepancy($discrepancy);
-  public function save();
 }

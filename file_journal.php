@@ -11,95 +11,28 @@ namespace Edison;
 
 class File_Journal implements Interfaces\Journal {
   /**
-   * @var string The experiment name.
+   * @var string The name of the experiment.
    */
-  private $experiment_name;
-
-  /**
-   * @var int How long the control took to execute.
-   */
-  private $control_duration;
-
-  /**
-   * @var int How long the variant took to execute.
-   */
-  private $variant_duration;
-
-  /**
-   * @var mixed Actual result from the control.
-   */
-  private $control_result;
-
-  /**
-   * @var mixed Actual result from the variant.
-   */
-  private $variant_result;
-
-  /**
-   * @var bool Was there a discrepancy?
-   */
-  private $discrepancy;
+  public $experiment_name;
 
   /**
    * Documentation
    *
-   * @return void
-   */
-  public function set_control_duration($duration) {
-    $this->control_duration = $duration;
-  }
-
-  /**
-   * Documentation
+   * @param \Edison\Observation $observation The observation to record.
    *
    * @return void
    */
-  public function set_variant_duration($duration) {
-    $this->variant_duration = $duration;
-  }
-
-  /**
-   * Documentation
-   *
-   * @return void
-   */
-  public function set_control_result($result) {
-    $this->control_result = $result;
-  }
-
-  /**
-   * Documentation
-   *
-   * @return void
-   */
-  public function set_variant_result($result) {
-    $this->variant_result = $result;
-  }
-
-  /**
-   * Documentation
-   *
-   * @return void
-   */
-  public function set_discrepancy($discrepancy) {
-    $this->discrepancy = $discrepancy;
-  }
-
-  /**
-   * Documentation
-   *
-   * @return void
-   */
-  public function save() {
+  public function save(\Edison\Observation $observation) {
     $filename = sprintf('%s-experiment.log', $this->experiment_name);
     $log = fopen($filename, 'a');
     $data = json_encode(
         [
-            'control_duration' => $this->control_duration,
-            'control_result'   => $this->control_result,
-            'variant_duration' => $this->variant_duration,
-            'variant_result'   => $this->variant_result,
-            'discrepancy'      => $this->discrepancy
+            'experiment_name'  => $this->experiment_name,
+            'control_duration' => $observation->control_duration,
+            'control_result'   => $observation->control_result,
+            'variant_duration' => $observation->variant_duration,
+            'variant_result'   => $observation->variant_result,
+            'discrepancy'      => $observation->discrepancy
         ]
     );
     fwrite($log, $data);

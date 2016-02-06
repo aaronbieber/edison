@@ -19,12 +19,15 @@ alerting when things happen.
 
 ## Conducting an Experiment ##
 
-Conducting an experiment is simple. Give Edison an experiment name and two code
-paths to evaluate and you're off to the races.
+Conducting an experiment is simple. Give Edison two code paths to evaluate and
+a journal object to persist the results somewhere and you're off to the races.
 
 ```php
 <?php
-$experiment = new Edison\Experiment('test-some-refactor');
+use Edison\Experiment;
+use Edison\Echo_Journal;
+
+$experiment = new Experiment(new Echo_Journal('test-some-refactor'));
 $experiment = $experiment
     ->use_control(function () { /* Control code */ })
     ->use_variant(function () { /* Variant (test) code */ });
@@ -34,13 +37,13 @@ $result = $experiment->run();
 
 By default, Edison will run both the control and variant code every time,
 comparing the results of the two functions using `==`. The results of the
-experiment will be written to a log file in the `/tmp` directory using a
-filename derived from the experiment name. The result from the control is always
-returned.
+experiment will be handed off to the journal's `save()` method, so you can set
+it up to do anything you want. In this example, we're using a journal that ships
+with Edison that simply prints the results as a JSON string.
 
 The results will include the full return values of the control and the variant,
 the execution time in milliseconds, and whether the results were found to be
-equivalent by Edison. By default, the results are written as a JSON string.
+equivalent by Edison.
 
 If your refactored code is potentially slower, or you don't have a great deal of
 confidence in it (which is why you're running an experiment, right?) you can
@@ -52,7 +55,7 @@ Experimental data is only generated when the test runs, so this will also help
 to keep logging volume down if you're refactoring a heavily trafficked code
 path.
 
-## Better Logging ##
+## Analyzing the Results ##
 
 Of course, in large environments, it makes sense to send the experiment results
 to some other service, like your ELK (Elasticsearch, Logstash, Kibana) stack,
@@ -60,25 +63,7 @@ Redis, etc. To do this, Edison allows you to provide your own experimental
 journal implementation.
 
 Simply create an object that implements `Edison\Interfaces\Journal` and pass it
-into the `Edison\Experiment` constructor. Edison ships with a toy journal
-implementation called `Echo_Journal` that simply spits out a JSON representation
-of experiment results using `echo`, which can be helpful for debugging or as a
-model for your own journal.
-
-```php
-<?php
-$experiment = new Edison\Experiment(
-    'test-some-refactor',
-    new Edison\Echo_Journal('test-some-refactor')
-);
-
-$experiment = $experiment
-    ->variant_percent(50)
-    ->use_control(function () { /* Control code */ })
-    ->use_variant(function () { /* Variant (test) code */ });
-
-$result = $experiment->run();
-```
+into the `Edison\Experiment` constructor.
 
 ## Sophisticated Comparison ##
 
@@ -96,7 +81,6 @@ only if all of them are the same.
 ```php
 <?php
 $experiment = new Edison\Experiment(
-    'test-some-refactor',
     new Edison\Echo_Journal('test-some-refactor'),
     new Custom_Comparator()
 );

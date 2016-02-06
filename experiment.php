@@ -11,11 +11,6 @@ namespace Edison;
 
 class Experiment {
   /**
-   * @var string Experiment name
-   */
-  private $experiment_name;
-
-  /**
    * @var \Edison\Interfaces\Comparator A comparator
    */
   private $comparator;
@@ -48,13 +43,11 @@ class Experiment {
    * @return void
    */
   public function __construct(
-      $experiment_name,
-      Interfaces\Journal $journal = null,
+      Interfaces\Journal $journal,
       Interfaces\Comparator $comparator = null
   ) {
-    $this->experiment_name = $experiment_name;
+    $this->journal = $journal;
     $this->comparator = $comparator ?: new Generic_Comparator();
-    $this->journal = $journal ?: new File_Journal($experiment_name);
   }
 
   /**
@@ -115,28 +108,29 @@ class Experiment {
    * @return mixed The result of calling the control case
    */
   public function run() {
+    $observation = new Observation();
+
     $start = $this->time_ms();
     $control = $this->control;
-    $this->journal->set_control_result($control());
-    $this->journal->set_control_duration($this->time_ms() - $start);
+    $observation->control_result = $control();
+    $observation->control_duration = $this->time_ms() - $start;
 
     if ($this->experiment_should_run()) {
       $start = $this->time_ms();
       $variant = $this->variant;
-      $this->journal->set_variant_result($variant());
-      $this->journal->set_variant_duration($this->time_ms() - $start);
+      $observation->variant_result = $variant();
+      $observation->variant_duration = $this->time_ms() - $start;
 
-      $this->journal->set_discrepancy(
-          !$this->compare(
-              $this->journal->control_result,
-              $this->journal->variant_result
-          )
+      $observation->discrepancy = !$this->compare(
+          $observation->control_result,
+          $observation->variant_result
       );
-      $this->journal->save();
+
+      $this->journal->save($observation);
     }
 
     // Always return control
-    return $this->journal->control_result;
+    return $observation->control_result;
   }
 
   /**
