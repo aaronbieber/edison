@@ -5,7 +5,7 @@
  * PHP Version 5
  *
  * @author    Aaron Bieber <aaron@aaronbieber.com>
- * @copyright 2015 Aaron Bieber - All rights reserved
+ * @copyright 2016 Aaron Bieber - All rights reserved
  */
 namespace AaronBieber\Edison;
 
