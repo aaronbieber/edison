@@ -11,12 +11,12 @@ namespace AaronBieber\Edison;
 
 class Experiment {
   /**
-   * @var \Edison\Interfaces\Comparator A comparator
+   * @var \AaronBieber\Edison\Interfaces\Comparator A comparator.
    */
   private $comparator;
 
   /**
-   * @var \Edison\Interfaces\Journal A journal.
+   * @var \AaronBieber\Edison\Interfaces\Journal A journal.
    */
   private $journal;
 
@@ -53,9 +53,9 @@ class Experiment {
   /**
    * Comparator setter
    *
-   * @param \WF\Shared\Edison\Comparator $comparator A comparator that implements the Comparator interface.
+   * @param \AaronBieber\Edison\Comparator $comparator A comparator that implements the Comparator interface.
    *
-   * @return \WF\Shared\Edison\Experiment Self, for fluent chaining.
+   * @return \AaronBieber\Edison\Experiment Self, for fluent chaining.
    */
   public function use_comparator(Comparator $comparator) {
     $this->comparator = $comparator;
@@ -68,7 +68,7 @@ class Experiment {
    *
    * @param callable $control A function to call as the control case.
    *
-   * @return \WF\Shared\Edison\Experiment Self, for fluent chaining.
+   * @return \AaronBieber\Edison\Experiment Self, for fluent chaining.
    */
   public function use_control(callable $control) {
     $this->control = $control;
@@ -81,7 +81,7 @@ class Experiment {
    *
    * @param callable $variant A function to call as the variant to test.
    *
-   * @return \WF\Shared\Edison\Experiment Self, for fluent chaining.
+   * @return \AaronBieber\Edison\Experiment Self, for fluent chaining.
    */
   public function use_variant(callable $variant) {
     $this->variant = $variant;
@@ -94,7 +94,7 @@ class Experiment {
    *
    * @param int $variant_percent How often to call the variant, as an integer percentage.
    *
-   * @return \WF\Shared\Edison\Experiment Self, for fluent chaining.
+   * @return \AaronBieber\Edison\Experiment Self, for fluent chaining.
    */
   public function variant_percent($variant_percent) {
     $this->variant_percent = $variant_percent;
