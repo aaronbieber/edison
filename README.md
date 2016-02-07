@@ -24,8 +24,8 @@ a journal object to persist the results somewhere and you're off to the races.
 
 ```php
 <?php
-use Edison\Experiment;
-use Edison\Echo_Journal;
+use \AaronBieber\Edison\Experiment;
+use \AaronBieber\Edison\Echo_Journal;
 
 $experiment = new Experiment(new Echo_Journal('test-some-refactor'));
 $experiment = $experiment
@@ -62,18 +62,19 @@ to some other service, like your ELK (Elasticsearch, Logstash, Kibana) stack,
 Redis, etc. To do this, Edison allows you to provide your own experimental
 journal implementation.
 
-Simply create an object that implements `Edison\Interfaces\Journal` and pass it
-into the `Edison\Experiment` constructor. The journal's `save()` method will be
-called with the results of the experiment stored in an instance of
-`Edison\Observation`. Handle the results however you want, perhaps sending
-timing data to Graphite and the return values to Logstash or Redis.
+Simply create an object that implements `\AaronBieber\Edison\Interfaces\Journal`
+and pass it into the `\AaronBieber\Edison\Experiment` constructor. The journal's
+`save()` method will be called with the results of the experiment stored in an
+instance of `\AaronBieber\Edison\Observation`. Handle the results however you
+want, perhaps sending timing data to Graphite and the return values to Logstash
+or Redis.
 
 ## Sophisticated Comparison ##
 
 Depending on what you're trying to refactor, the results of the original and
 refactored code paths may not be comparable using `==`. In that case, you can
 also provide Edison with your own comparator that implements
-`Edison\Interfaces\Comparator`.
+`\AaronBieber\Edison\Interfaces\Comparator`.
 
 This allows you to explicitly define the success criteria for your
 experiments. Perhaps both code paths produce an object containing the same data,
@@ -83,8 +84,11 @@ only if all of them are the same.
 
 ```php
 <?php
-$experiment = new Edison\Experiment(
-    new Edison\Echo_Journal('test-some-refactor'),
+use AaronBieber\Edison\Experiment;
+use AaronBieber\Edison\Echo_Journal;
+
+$experiment = new Experiment(
+    new Echo_Journal('test-some-refactor'),
     new Custom_Comparator()
 );
 
