@@ -103,6 +103,15 @@ class Experiment {
   }
 
   /**
+   * Journal getter, primarily for unit testing purposes. You shouldn't need to access the journal directly.
+   *
+   * @return \AaronBieber\Edison\Journal The journal.
+   */
+  public function get_journal() {
+    return $this->journal;
+  }
+
+  /**
    * Run the experiment.
    *
    * @return mixed The result of calling the control case
