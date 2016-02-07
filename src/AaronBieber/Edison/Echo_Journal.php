@@ -7,7 +7,7 @@
  * @author    Aaron Bieber <aaron@aaronbieber.com>
  * @copyright 2015 Aaron Bieber - All rights reserved
  */
-namespace Edison;
+namespace AaronBieber\Edison;
 
 class Echo_Journal implements Interfaces\Journal {
   /**
@@ -22,7 +22,7 @@ class Echo_Journal implements Interfaces\Journal {
    *
    * @return void
    */
-  public function save(\Edison\Observation $observation) {
+  public function save(Observation $observation) {
     echo json_encode(
         [
             'experiment_name'  => $this->experiment_name,

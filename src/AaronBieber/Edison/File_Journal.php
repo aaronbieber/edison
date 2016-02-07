@@ -7,7 +7,7 @@
  * @author    Aaron Bieber <aaron@aaronbieber.com>
  * @copyright 2015 Aaron Bieber - All rights reserved
  */
-namespace Edison;
+namespace AaronBieber\Edison;
 
 class File_Journal implements Interfaces\Journal {
   /**
@@ -22,7 +22,7 @@ class File_Journal implements Interfaces\Journal {
    *
    * @return void
    */
-  public function save(\Edison\Observation $observation) {
+  public function save(Observation $observation) {
     $filename = sprintf('%s-experiment.log', $this->experiment_name);
     $log = fopen($filename, 'a');
     $data = json_encode(

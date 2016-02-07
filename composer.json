@@ -1,0 +1,16 @@
+{
+    "name": "aaronbieber/edison",
+    "description": "Run experiments on refactored code paths.",
+    "authors": [
+        {
+            "name": "Aaron Bieber",
+            "email": "aaron@aaronbieber.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "AaronBieber\\Edison\\": "src"
+        }
+    }
+}

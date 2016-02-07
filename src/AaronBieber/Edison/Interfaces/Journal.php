@@ -7,9 +7,11 @@
  * @author    Aaron Bieber <aaron@aaronbieber.com>
  * @copyright 2015 Aaron Bieber - All rights reserved
  */
-namespace Edison\Interfaces;
+namespace AaronBieber\Edison\Interfaces;
+
+use AaronBieber\Edison\Observation;
 
 interface Journal {
-  public function save(\Edison\Observation $observation);
+  public function save(Observation $observation);
   public function __construct($experiment_name);
 }

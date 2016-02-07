@@ -7,7 +7,7 @@
  * @author    Aaron Bieber <aaron@aaronbieber.com>
  * @copyright 2015 Aaron Bieber - All rights reserved
  */
-namespace Edison;
+namespace AaronBieber\Edison;
 
 class Generic_Comparator implements Interfaces\Comparator {
   /**

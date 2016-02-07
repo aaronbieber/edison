@@ -7,7 +7,7 @@
  * @author    Aaron Bieber <aaron@aaronbieber.com>
  * @copyright 2015 Aaron Bieber - All rights reserved
  */
-namespace Edison\Interfaces;
+namespace AaronBieber\Edison\Interfaces;
 
 interface Comparator {
   /**
